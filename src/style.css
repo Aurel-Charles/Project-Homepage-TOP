@@ -52,3 +52,374 @@
   #root, #__next {
     isolation: isolate;
   }
+
+  :root{
+    --color-one : #1f88a8;
+    --color-two : orange;
+    --ink : #4a4a4a;
+    --display-font : 'Playfair Display', Georgia, serif;
+    /* largeur de la carte "About me" — le nom s'aligne sur le même axe */
+    --card-width : 78%;
+    --card-max : 46rem;
+  }
+
+  body{
+    font-size: 1.2rem;
+    font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+    color: var(--ink);
+    background-color: #fff;
+  }
+
+  h1, h2, h3{
+    font-family: var(--display-font);
+    color: #1a1a1a;
+  }
+
+  h1{
+    font-size: 4rem;
+  }
+
+  h2{
+    font-size: 2rem;
+  }
+
+  h3{
+    font-size: 1.5rem;
+  }
+
+  address{
+    font-style: normal;
+  }
+
+
+
+  /* --- Header --- */
+  /* Le bandeau est une couche décorative en position absolue (z-index -1),
+     isolée dans le header. Tout le reste passe devant sans avoir à être
+     positionné, et .hero-name peut s'ancrer sur le header en tablette. */
+
+  header{
+    position: relative;
+    isolation: isolate;
+    padding-top: 1rem;
+  }
+
+  .hero-banner{
+    position: absolute;
+    inset: 0 0 auto 0;
+    z-index: -1;
+    background-color: var(--color-one);
+    /* bord bas en diagonale : la queue gauche descend plus bas que la droite */
+    clip-path: polygon(0 0, 100% 0, 100% 52%, 0 96%);
+  }
+
+  .resume{
+    padding: 0 1rem 1.5rem;
+  }
+
+  /* pile photo + nom */
+  .hero-figure{
+    display: grid;
+    grid-template-areas: "stack";
+    width: 82%;
+    margin: 0 auto 1.5rem;
+    box-shadow: 0 6px 18px rgb(0 0 0 / 0.35);
+  }
+
+  .hero-figure > *{
+    grid-area: stack;
+  }
+
+  .hero-photo{
+    aspect-ratio: 3 / 4;
+  }
+
+  .hero-photo img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .hero-name{
+    align-self: end;
+    justify-self: start;
+    margin-bottom: 6%;
+    padding: 0.2rem 0.7rem;
+    width: fit-content;
+    max-width: 85%;
+    background-color: rgb(255 255 255 / 0.22);
+    color: #fff;
+    font-size: clamp(2.2rem, 11vw, 3.5rem);
+    line-height: 1.05;
+  }
+
+  .resume > h2{
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+
+  .resume > p {
+    margin: 0.8rem 0;
+    line-height: 1.6;
+  }
+
+  .resume-icon{
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  .icon{
+    font-size: 1.8rem;
+    margin: 0.3rem;
+  }
+
+
+  main{
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    padding: 1rem;
+  }
+
+  .main-title{
+    grid-column: 1 / -1;
+  }
+
+  .card{
+    box-shadow: 0 3px 10px black;
+  }
+  
+  .card img {
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .footer-card{
+    padding: 1rem;
+  }
+
+  .title-icon-card{
+    display: flex;
+    align-items: center;
+  }
+  
+  .title-icon-card > h3{
+    margin-right: auto;
+  }
+
+  footer{
+    padding: 1rem 0 0 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    background-color: var(--color-one);
+    color: white;
+  }
+
+  .contact{
+    padding: 1rem ;
+  }
+
+  .contact > h2{
+    margin-bottom: 1.2rem;
+    color: inherit;
+  }
+
+  .phone-wrapper{
+    display: flex;
+    margin-top: 1.2rem;
+    gap: 1rem;
+  }
+
+  .email-wrapper{
+    display: flex;
+    margin: 1.2rem 0;
+    gap: 1rem;
+  }
+
+  .contact-details a{
+    color: inherit;
+  }
+
+
+  .work-image{
+    width: 100%;
+    aspect-ratio: 4 / 3;
+  }
+
+  .work-image img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+
+  .resume-icon > *{
+    color: black;
+  }
+  .contact-icon > * {
+    color: white;
+  }
+
+
+  /* =======================================================
+     Tablette — le texte habille la photo (float)
+     ======================================================= */
+
+  @media screen and (min-width: 660px) {
+
+    header{
+
+      /* l'écart nom / carte = padding-top - (top du nom + sa hauteur de ligne) */
+      padding: 8rem 0 3rem;
+    }
+
+    .hero-banner{
+      aspect-ratio: 1.8 / 1;
+      clip-path: polygon(0 0, 100% 0, 100% 55%, 86% 64%, 14% 100%, 0 88%);
+    }
+
+    .resume{
+      display: flow-root;        /* contient le float sans hack de clear */
+      width: var(--card-width);
+      max-width: var(--card-max);
+      margin: 0 auto;
+      padding: 2rem;
+      background-color: #fff;
+      box-shadow: 0 6px 20px rgb(0 0 0 / 0.2);
+    }
+
+    .hero-figure{
+      float: left;
+      width: 58%;
+      /* le négatif du haut = de combien la photo dépasse au-dessus de la carte */
+      margin: -7rem 1.5rem 1rem -2.5rem;
+    }
+
+    .hero-photo{
+      aspect-ratio: 9 / 10;
+    }
+
+    .hero-name{
+      /* sort de la pile pour se poser sur le bandeau, en haut à droite.
+         S'ancre sur le header, seul ancêtre positionné — mais on lui donne
+         le même axe et la même largeur que la carte, à 4 % près, pour que
+         les deux ne divergent pas quand la fenêtre s'élargit. */
+      position: absolute;
+      z-index: 2;
+      top: 3.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      width: calc(var(--card-width) + 4%);
+      max-width: calc(var(--card-max) + 2rem);
+      margin: 0;
+      padding: 0;
+      background-color: transparent;
+      font-size: clamp(2.4rem, 5.5vw, 3.8rem);
+      text-align: right;
+      text-shadow: black 0 0 1px;
+    }
+
+    .resume > h2{
+      margin-bottom: 0.8rem;
+    }
+
+    .resume-icon{
+      justify-content: flex-end;
+    }
+
+    main{
+      grid-template-columns: repeat(2, 1fr);
+      padding: 2rem;
+    }
+  }
+
+
+  /* =======================================================
+     Desktop — photo à gauche, carte à droite, nom dans la photo
+     ======================================================= */
+
+  @media screen and (min-width: 1000px) {
+
+    header{
+      padding: 6rem 0;
+    }
+
+    .hero-banner{
+      aspect-ratio: 2 / 1;
+      clip-path: polygon(0 0, 100% 0, 100% 52%, 90% 58%, 6% 100%, 0 92%);
+    }
+
+    .resume{
+      position: relative;      /* ancre la photo */
+      width: 50%;
+      max-width: 42rem;
+      margin: 0 6% 0 auto;     /* poussée contre le bord droit */
+      padding: 2.5rem;
+    }
+
+    /* hors flux : la carte garde la hauteur de son texte, la photo
+       déborde librement au-dessus et en dessous */
+    .hero-figure{
+      position: absolute;
+      float: none;
+      top: -3rem;
+      right: 100%;             /* bord droit collé au bord gauche de la carte */
+      width: 76%;
+      margin: 0;
+    }
+
+    .hero-name{
+      /* redevient un enfant de la pile : le nom repasse dans la photo */
+      position: static;
+      transform: none;
+      align-self: end;
+      justify-self: start;
+      width: fit-content;
+      max-width: 88%;
+      margin: 0 0 5% 5%;
+      padding: 0;
+      text-align: left;
+      font-size: clamp(2rem, 3vw, 3rem);
+      text-shadow: 0 2px 10px rgb(0 0 0 / 0.7);
+    }
+
+    .resume > h2{
+      text-align: left;
+      margin-bottom: 1.2rem;
+    }
+
+    main{
+      grid-template-columns: repeat(3, 1fr);
+      padding: 2rem 6%;
+    }
+
+    footer{
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      align-items: start;
+      gap: 3rem;
+      padding: 3.5rem 6% 4rem;
+    }
+
+    .contact{
+      padding: 0;
+    }
+
+    .contact > h2{
+      font-size: 2.5rem;
+    }
+
+    /* l'image n'est plus pleine largeur : elle occupe sa colonne */
+    .work-image{
+      width: 100%;
+    }
+  }
+
+  
