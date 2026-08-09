@@ -94,9 +94,6 @@
 
 
   /* --- Header --- */
-  /* Le bandeau est une couche décorative en position absolue (z-index -1),
-     isolée dans le header. Tout le reste passe devant sans avoir à être
-     positionné, et .hero-name peut s'ancrer sur le header en tablette. */
 
   header{
     position: relative;
@@ -109,7 +106,7 @@
     inset: 0 0 auto 0;
     z-index: -1;
     background-color: var(--color-one);
-    /* bord bas en diagonale : la queue gauche descend plus bas que la droite */
+
     clip-path: polygon(0 0, 100% 0, 100% 52%, 0 96%);
   }
 
@@ -117,7 +114,7 @@
     padding: 0 1rem 1.5rem;
   }
 
-  /* pile photo + nom */
+  /* pile photo + name */
   .hero-figure{
     display: grid;
     grid-template-areas: "stack";
@@ -190,13 +187,40 @@
 
   .card{
     box-shadow: 0 3px 10px black;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
   }
-  
+
+  .card:hover{
+    transform: translateY(-5px);
+    box-shadow: 0 10px 22px rgb(0 0 0 / 0.55);
+  }
+
+  /* découpe le zoom : sans ça l'image agrandie déborde de la carte */
+  .picture-card{
+    overflow: hidden;
+  }
+
   .card img {
     width: 100%;
     aspect-ratio: 3 / 2;
     object-fit: cover;
     object-position: center;
+    transition: transform 0.4s ease-in-out;
+  }
+
+  /* piloté par le survol de la CARTE, pas de l'image : les deux
+     animations restent synchronisées où que soit le curseur */
+  .card:hover img{
+    transform: scale(1.1);
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .card, .card img{
+      transition: none;
+    }
+    .card:hover, .card:hover img{
+      transform: none;
+    }
   }
 
   .footer-card{
@@ -269,13 +293,12 @@
 
 
   /* =======================================================
-     Tablette — le texte habille la photo (float)
+     Tablette 
      ======================================================= */
 
   @media screen and (min-width: 660px) {
 
     header{
-
       /* l'écart nom / carte = padding-top - (top du nom + sa hauteur de ligne) */
       padding: 8rem 0 3rem;
     }
@@ -307,10 +330,6 @@
     }
 
     .hero-name{
-      /* sort de la pile pour se poser sur le bandeau, en haut à droite.
-         S'ancre sur le header, seul ancêtre positionné — mais on lui donne
-         le même axe et la même largeur que la carte, à 4 % près, pour que
-         les deux ne divergent pas quand la fenêtre s'élargit. */
       position: absolute;
       z-index: 2;
       top: 3.5rem;
@@ -342,7 +361,7 @@
 
 
   /* =======================================================
-     Desktop — photo à gauche, carte à droite, nom dans la photo
+     Desktop
      ======================================================= */
 
   @media screen and (min-width: 1000px) {
