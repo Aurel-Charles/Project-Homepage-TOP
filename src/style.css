@@ -352,7 +352,10 @@
     }
 
     .hero-banner{
-      aspect-ratio: 2 / 1;
+      /* hauteur pilotée par le contenu du header, pas par la largeur de
+         l'écran : un aspect-ratio explose sur les grands moniteurs */
+      inset: 0;
+      aspect-ratio: auto;
       clip-path: polygon(0 0, 100% 0, 100% 52%, 90% 58%, 6% 100%, 0 92%);
     }
 
